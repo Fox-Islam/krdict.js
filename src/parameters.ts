@@ -4,7 +4,7 @@ import { mapSortMethod, SortMethod } from './value_types/sort_method';
 import { MeaningCategory, mapMeaningCategory } from './value_types/meaning_category';
 import { MultimediaInformation, mapMultimediaInformation } from './value_types/multimedia_information';
 import { PartOfSpeech, mapPartOfSpeech } from './value_types/part_of_speech';
-import { RequestLanguage, mapRequestLanguage } from './value_types/request_language';
+import { TargetLanguage, mapTargetLanguage } from './value_types/target_language';
 import { SearchMethod } from './value_types/search_method';
 import { SearchTargetType, mapSearchTargetType } from './value_types/search_target_type';
 import { SecondCategory } from './value_types/second_category';
@@ -29,7 +29,7 @@ interface Parameters extends ParametersProperties {
     translationLanguage?: TranslationLanguage | TranslationLanguage[];
     detailedSearch?: boolean;
     searchTargetType?: SearchTargetType;
-    requestLanguage?: RequestLanguage;
+    targetLanguage?: TargetLanguage;
     searchMethod?: SearchMethod;
     firstCategory?: FirstCategory[];
     secondCategory?: SecondCategory[];
@@ -83,9 +83,9 @@ const parameterMapper: ParameterMapperProperties = {
         name: 'target',
         mapperFunction: mapSearchTargetType,
     },
-    requestLanguage: {
+    targetLanguage: {
         name: 'lang',
-        mapperFunction: mapRequestLanguage,
+        mapperFunction: mapTargetLanguage,
     },
     searchMethod: {
         name: 'method',

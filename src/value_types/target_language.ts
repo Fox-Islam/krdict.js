@@ -20,7 +20,8 @@ const mapKey = {
     vietnamese: 17,
     bulgarian: 18,
     sanskrit: 19,
-    'servo/croat': 20,
+    servo: 20,
+    croat: 20,
     swahili: 21,
     swedish: 22,
     arabic: 23,
@@ -52,7 +53,7 @@ const mapKey = {
     danish: 49,
 };
 
-type RequestLanguage =
+type TargetLanguage =
     | 'all'
     | 'native language'
     | 'chinese'
@@ -74,7 +75,8 @@ type RequestLanguage =
     | 'vietnamese'
     | 'bulgarian'
     | 'sanskrit'
-    | 'servo/croat'
+    | 'servo'
+    | 'croat'
     | 'swahili'
     | 'swedish'
     | 'arabic'
@@ -105,8 +107,8 @@ type RequestLanguage =
     | 'other'
     | 'danish';
 
-function mapRequestLanguage(input: RequestLanguage): number {
+function mapTargetLanguage(input: TargetLanguage): number {
     return mapKey[input];
 }
 
-export { RequestLanguage, mapRequestLanguage };
+export { TargetLanguage, mapTargetLanguage };
