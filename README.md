@@ -91,3 +91,4 @@ which are mapped to the parameter names and values expected by the krdict API:
   }
 }
 ```
+You can view a complete list of accepted parameters and their values on [the wiki page](https://github.com/Fox-Islam/krdict.js/wiki/Complete-list-of-parameters)
