@@ -61,9 +61,23 @@ function sendRequest(parameters: any) {
 }
 
 function getCleanJsonData(json: object): object {
-    // I have no idea why there are so many '\t's '\r's and '\n's in the response
-    // text (specifically in the trans_lang value), but I'm getting rid of them
-    return JSON.parse(JSON.stringify(json).replace(/(\\t)*(\\r)*(\\n)*/g, ''));
+    const jsonString = JSON.stringify(json)
+        // I have no idea why there are so many '\t's '\r's and '\n's in the response
+        // text (specifically in the trans_lang value), but I'm getting rid of them:
+        .replace(/(\\t)*(\\r)*(\\n)*/g, '')
+        // Only changing these for consistency, not sure that they're all that useful:
+        .replace(/\"sup_no\"/g, '"homomorphicNumber"')
+        .replace(/\"target_code\"/g, '"targetCode"')
+        // Bringing these in line with the names of the input parameters:
+        .replace(/\"sense\"/g, '"meaning"')
+        .replace(/\"sense_order\"/g, '"meaningOrder"')
+        .replace(/\"pos\"/g, '"partOfSpeech"')
+        .replace(/\"word_grade\"/g, '"vocabularyGrade"')
+        // These are all in a "translation" property, the preceding 'trans_' isn't useful:
+        .replace(/\"trans_lang\"/g, '"language"')
+        .replace(/\"trans_word\"/g, '"word"')
+        .replace(/\"trans_dfn\"/g, '"definition"');
+    return JSON.parse(jsonString);
 }
 
 export { dictionarySearch };

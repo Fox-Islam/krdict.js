@@ -21,12 +21,12 @@ Which would ouput something like this:
     "item": [
       {
         "word": [ "나무" ],
-        "word_grade": [ "초급" ],
-        "pos": [ "명사" ],
+        "vocabularyGrade": [ "초급" ],
+        "partOfSpeech": [ "명사" ],
         ...
-        "sense": [
+        "meaning": [
           {
-            "sense_order": [ "1" ],
+            "meaningOrder": [ "1" ],
             "definition": [ "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물." ]
           },
           ...
@@ -70,17 +70,17 @@ which are mapped to the parameter names and values expected by the krdict API:
     "item": [
         {
             "word": [ "나무" ],
-            "word_grade": [ "초급" ],
-            "pos": [ "명사" ],
+            "vocabularyGrade": [ "초급" ],
+            "partOfSpeech": [ "명사" ],
             ...
-            "sense": [
+            "meaning": [
                 {
-                    "sense_order": [ "1" ],
+                    "meaningOrder": [ "1" ],
                     "definition": [ "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물." ],
                     "translation": [{
-                        "trans_lang": [ "영어" ],
-                        "trans_word": [ "tree" ],
-                        "trans_dfn": [ "A plant with a hard stem, branches and leaves." ]
+                        "language": [ "영어" ],
+                        "word": [ "tree" ],
+                        "definition": [ "A plant with a hard stem, branches and leaves." ]
                     }]
                 },
                 ...
