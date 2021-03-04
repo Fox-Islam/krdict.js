@@ -1,0 +1,45 @@
+{
+  "name": "krdict.js",
+  "version": "1.0.0",
+  "description": "A node.js module to interact with krdict, the Korean Learners' Dictionary",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
+  },
+  "author": "Fox Islam",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/xml2js": "^0.4.8",
+    "prettier": "^2.2.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.2.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "xml2js": "^0.4.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fox-Islam/krdict.js.git"
+  },
+  "keywords": [
+    "Korean",
+    "Dictionary",
+    "API",
+    "krdict",
+    "Learners",
+    "Translation"
+  ]
+}
