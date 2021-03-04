@@ -2,6 +2,11 @@
 
 A node.js module to interact with [krdict](https://krdict.korean.go.kr), the Korean Learners' Dictionary, through its [API](https://krdict.korean.go.kr/openApi/openApiInfo). To use this module you'll need an API key from krdict.
 
+To install the module from npm run:
+```
+npm install krdict.js
+```
+
 An example of a basic query with only the required parameters:
 ```javascript
 const krdict = require('krdict.js');
