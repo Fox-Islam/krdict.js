@@ -1,8 +1,9 @@
 const mapKey = {
     vocabulary: 1,
+    headword: 1,
     meaning: 2,
     examples: 3,
-    original: 4,
+    'original language': 4,
     pronunciation: 5,
     utilization: 6,
     'utilization shorthand': 7,
@@ -13,9 +14,10 @@ const mapKey = {
 
 type SearchTargetType =
     | 'vocabulary'
+    | 'headword'
     | 'meaning'
     | 'examples'
-    | 'original'
+    | 'original language'
     | 'pronunciation'
     | 'utilization'
     | 'utilization shorthand'
