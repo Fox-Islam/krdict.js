@@ -10,7 +10,7 @@ import { SearchTargetType, mapSearchTargetType } from './value_types/search_targ
 import { SecondCategory } from './value_types/second_category';
 import { SubjectCategory, mapSubjectCategory } from './value_types/subject_category';
 import { TranslationLanguage, mapTranslationLanguage } from './value_types/translation_language';
-import { VocabularyGrade } from './value_types/vocabulary_grade';
+import { VocabularyGrade, mapVocabularyGrade } from './value_types/vocabulary_grade';
 
 type ParametersValues = string | number | boolean | number[] | string[] | undefined;
 
@@ -36,8 +36,8 @@ interface Parameters extends ParametersProperties {
     vocabularyGrade?: VocabularyGrade[];
     partOfSpeech?: PartOfSpeech[];
     multimediaInformation?: MultimediaInformation[];
-    startNumberOfSyllables?: number;
-    endNumberOfSyllables?: number;
+    minNumberOfSyllables?: number;
+    maxNumberOfSyllables?: number;
     meaningCategory?: MeaningCategory[];
     subjectCategory?: SubjectCategory[];
 }
@@ -98,6 +98,7 @@ const parameterMapper: ParameterMapperProperties = {
     },
     vocabularyGrade: {
         name: 'level',
+        mapperFunction: mapVocabularyGrade,
     },
     partOfSpeech: {
         name: 'pos',
@@ -107,10 +108,10 @@ const parameterMapper: ParameterMapperProperties = {
         name: 'multimedia',
         mapperFunction: mapMultimediaInformation,
     },
-    startNumberOfSyllables: {
+    minNumberOfSyllables: {
         name: 'letter_s',
     },
-    endNumberOfSyllables: {
+    maxNumberOfSyllables: {
         name: 'letter_e',
     },
     meaningCategory: {
