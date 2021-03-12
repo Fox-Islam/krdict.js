@@ -43,10 +43,10 @@ const mapKey = {
     'explaining food': 44,
     'explaining cooking': 45,
     'life in korea': 48,
-    'career and career': 49,
+    'career': 49,
     'work life': 50,
     'weekends and holidays': 52,
-    'family events(holidays)': 55,
+    'family events (holidays)': 55,
     'using public institutions': 57,
     'invitations and visiting': 58,
     'expressing emotions and moods': 61,
@@ -133,10 +133,10 @@ type SubjectCategory =
     | 'explaining food'
     | 'explaining cooking'
     | 'life in korea'
-    | 'career and career'
+    | 'career'
     | 'work life'
     | 'weekends and holidays'
-    | 'family events(holidays)'
+    | 'family events (holidays)'
     | 'using public institutions'
     | 'invitations and visiting'
     | 'expressing emotions and moods'
