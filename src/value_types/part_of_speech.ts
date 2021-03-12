@@ -1,34 +1,34 @@
 const mapKey = {
-    whole: 0,
+    all: 0,
     noun: 1,
     pronoun: 2,
-    rhetoric: 3,
-    investigation: 4,
+    numeral: 3,
+    'postpositional particle': 4,
     verb: 5,
     adjective: 6,
-    'tube sentence': 7,
+    determiner: 7,
     adverb: 8,
     interjection: 9,
     affix: 10,
-    'dependent noun': 11,
+    'bound noun': 11,
     'auxiliary verb': 12,
     'auxiliary adjective': 13,
     ending: 14,
     none: 15,
 };
 type PartOfSpeech =
-    | 'whole'
+    | 'all'
     | 'noun'
     | 'pronoun'
-    | 'rhetoric'
-    | 'investigation'
+    | 'numeral'
+    | 'postpositional particle'
     | 'verb'
     | 'adjective'
-    | 'tube sentence'
+    | 'determiner'
     | 'adverb'
     | 'interjection'
     | 'affix'
-    | 'dependent noun'
+    | 'bound noun'
     | 'auxiliary verb'
     | 'auxiliary adjective'
     | 'ending'
