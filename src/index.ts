@@ -4,12 +4,18 @@ import * as xmlParser from 'xml2js';
 import { parameterMapper, Parameters, ParametersValues } from './parameters';
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
+let API_KEY: string | null = null;
+
+function setKey(key: string) {
+    API_KEY = key;
+}
 
 function dictionarySearch(parameters: Parameters) {
     return sendRequest(createKrdictApiParameters(parameters));
 }
 
 function createKrdictApiParameters(parameters: Parameters) {
+    parameters.key = API_KEY ? API_KEY : parameters.key;
     const krdictParameters: any = parameters;
     for (const inputParamPropertyName in parameters) {
         if (!parameters.hasOwnProperty(inputParamPropertyName)) {
@@ -80,4 +86,4 @@ function getCleanJsonData(json: object): object {
     return JSON.parse(jsonString);
 }
 
-export { dictionarySearch };
+export { dictionarySearch, setKey };

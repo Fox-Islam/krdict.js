@@ -19,7 +19,7 @@ interface ParametersProperties {
 }
 
 interface Parameters extends ParametersProperties {
-    key: string;
+    key?: string;
     query: string;
     searchStartIndex?: number;
     numberOfResults?: number;
