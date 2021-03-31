@@ -5,6 +5,16 @@ import { parameterMapper, Parameters, ParametersValues } from './parameters';
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
 let API_KEY: string | null = null;
+const keyRemaps: Record<string, string> = {
+    sup_no: 'homomorphicNumber',
+    sense: 'meaning',
+    sense_order: 'meaningOrder',
+    pos: 'partOfSpeech',
+    word_grade: 'vocabularyGrade',
+    trans_lang: 'language',
+    trans_word: 'word',
+    trans_dfn: 'definition'
+};
 
 function setKey(key: string) {
     API_KEY = key;
@@ -66,24 +76,70 @@ function sendRequest(parameters: any) {
         });
 }
 
-function getCleanJsonData(json: object): object {
-    const jsonString = JSON.stringify(json)
-        // I have no idea why there are so many '\t's '\r's and '\n's in the response
-        // text (specifically in the trans_lang value), but I'm getting rid of them:
-        .replace(/(\\t)*(\\r)*(\\n)*/g, '')
-        // Only changing these for consistency, not sure that they're all that useful:
-        .replace(/\"sup_no\"/g, '"homomorphicNumber"')
-        .replace(/\"target_code\"/g, '"targetCode"')
-        // Bringing these in line with the names of the input parameters:
-        .replace(/\"sense\"/g, '"meaning"')
-        .replace(/\"sense_order\"/g, '"meaningOrder"')
-        .replace(/\"pos\"/g, '"partOfSpeech"')
-        .replace(/\"word_grade\"/g, '"vocabularyGrade"')
-        // These are all in a "translation" property, the preceding 'trans_' isn't useful:
-        .replace(/\"trans_lang\"/g, '"language"')
-        .replace(/\"trans_word\"/g, '"word"')
-        .replace(/\"trans_dfn\"/g, '"definition"');
-    return JSON.parse(jsonString);
+function getCleanJsonData(json: any): object {
+    const stack = [[json, null]];
+    const rename = [];
+
+    while (stack.length > 0) {
+        let [elem, key] = stack.pop()!;
+
+        // check key for renaming & value trimming
+        if (key !== null) {
+            const container = elem;
+            elem = container[key];
+
+            // handle the tab and newline characters
+            if (Array.isArray(elem) && elem.length === 1 && typeof elem[0] === 'string') {
+                // this branch can be removed when explicitArray option is used
+                elem[0] = elem[0].trim();
+            } else if (typeof elem === 'string') {
+                elem = elem.trim();
+                container[key] = elem;
+            }
+
+            if (keyRemaps[key]) {
+                const oldKey = key;
+                key = keyRemaps[key];
+
+                rename.push([container, oldKey, key]);
+            } else if (key.indexOf('_') !== -1) {
+                // convert snake case to camel case
+                const oldKey = key;
+                for (let i = key.indexOf('_'); i !== -1; i = key.indexOf('_')) {
+                    const before = key.substring(0, i);
+                    const after = key.substring(i + 1, i + 2).toUpperCase() + key.substring(i + 2);
+                    key = before + after;
+                }
+
+                rename.push([container, oldKey, key]);
+            }
+        }
+
+
+        // push nested elements to the stack
+        if (Array.isArray(elem)) {
+            for (let i = 0; i < elem.length; i++) {
+                stack.push([elem[i], null]);
+            }
+        } else if (typeof elem === 'object') {
+            for (const key in elem) {
+                if (!elem.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                stack.push([elem, key])
+            }
+        }
+    }
+
+    for (let i = 0; i < rename.length; i++) {
+        const [container, oldKey, newKey] = rename[i];
+
+        container[newKey] = container[oldKey];
+        delete container[oldKey];
+    }
+
+    return json;
 }
 
 export { dictionarySearch, setKey };
