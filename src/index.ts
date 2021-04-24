@@ -5,7 +5,7 @@ import { parameterMapper, Parameters, ParametersValues } from './parameters';
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
 let API_KEY: string | null = null;
-const keyRemaps: Record<string, string> = {
+const KEY_REMAPS: Record<string, string> = {
     sup_no: 'homomorphicNumber',
     sense: 'meaning',
     sense_order: 'meaningOrder',
@@ -76,43 +76,55 @@ function sendRequest(parameters: any) {
         });
 }
 
+function handleTabAndNewline(container: any, key: string) {
+    const elem = container[key];
+
+    if (Array.isArray(elem) && elem.length === 1 && typeof elem[0] === 'string') {
+        // this branch can be removed when explicitArray option is used
+        elem[0] = elem[0].trim();
+    } else if (typeof elem === 'string') {
+        container[key] = elem.trim();
+    }
+}
+
+function handleRemaps(container: any, key: string, rename: any[][]) {
+    if (KEY_REMAPS[key] === undefined) {
+        return;
+    }
+
+    rename.push([container, key, KEY_REMAPS[key]]);
+}
+
+function handleSnakeCase(container: any, key: string, rename: any[][]) {
+    let i = key.indexOf('_');
+    if (i === -1) {
+        return;
+    }
+
+    const oldKey = key;
+    do {
+        const before = key.substring(0, i);
+        const after = key.substring(i + 1, i + 2).toUpperCase() + key.substring(i + 2);
+        key = before + after;
+        i = key.indexOf('_');
+    } while (i !== -1);
+
+    rename.push([container, oldKey, key]);
+}
+
 function getCleanJsonData(json: any): object {
     const stack = [[json, null]];
-    const rename = [];
+    const rename: any[][] = [];
 
     while (stack.length > 0) {
         let [elem, key] = stack.pop()!;
 
-        // check key for renaming & value trimming
         if (key !== null) {
-            const container = elem;
-            elem = container[key];
+            handleTabAndNewline(elem, key);
+            handleRemaps(elem, key, rename);
+            handleSnakeCase(elem, key, rename);
 
-            // handle the tab and newline characters
-            if (Array.isArray(elem) && elem.length === 1 && typeof elem[0] === 'string') {
-                // this branch can be removed when explicitArray option is used
-                elem[0] = elem[0].trim();
-            } else if (typeof elem === 'string') {
-                elem = elem.trim();
-                container[key] = elem;
-            }
-
-            if (keyRemaps[key]) {
-                const oldKey = key;
-                key = keyRemaps[key];
-
-                rename.push([container, oldKey, key]);
-            } else if (key.indexOf('_') !== -1) {
-                // convert snake case to camel case
-                const oldKey = key;
-                for (let i = key.indexOf('_'); i !== -1; i = key.indexOf('_')) {
-                    const before = key.substring(0, i);
-                    const after = key.substring(i + 1, i + 2).toUpperCase() + key.substring(i + 2);
-                    key = before + after;
-                }
-
-                rename.push([container, oldKey, key]);
-            }
+            elem = elem[key];
         }
 
 
