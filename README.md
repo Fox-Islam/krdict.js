@@ -11,8 +11,9 @@ An example of a basic query with only the required parameters:
 ```javascript
 const krdict = require('krdict.js');
 
+krDict.setKey(API_KEY);
+
 krdict.dictionarySearch({
-    key: API_KEY,
     query: '나무',
 }).then((response) => {
     console.log(JSON.stringify(response.data));
@@ -47,8 +48,9 @@ Additional parameters can be passed in
 ```javascript
 const krdict = require('krdict.js');
 
+krdict.setKey(API_KEY);
+
 krdict.dictionarySearch({
-    key: API_KEY,
     query: '나무',
     sortMethod: 'alphabetical',
     shouldTranslate: true,
