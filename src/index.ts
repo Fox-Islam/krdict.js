@@ -117,6 +117,7 @@ function getCleanJsonData(json: any): object {
     const rename: any[][] = [];
 
     while (stack.length > 0) {
+        // tslint:disable-next-line
         let [elem, key] = stack.pop()!;
 
         if (key !== null) {
@@ -130,20 +131,21 @@ function getCleanJsonData(json: any): object {
 
         // push nested elements to the stack
         if (Array.isArray(elem)) {
-            for (let i = 0; i < elem.length; i++) {
-                stack.push([elem[i], null]);
+            for (const index of elem) {
+                stack.push([elem[index], null]);
             }
         } else if (typeof elem === 'object') {
-            for (const key in elem) {
-                if (!elem.hasOwnProperty(key)) {
+            for (const elementKey in elem) {
+                if (!elem.hasOwnProperty(elementKey)) {
                     continue;
                 }
 
-                stack.push([elem, key])
+                stack.push([elem, elementKey])
             }
         }
     }
 
+    // tslint:disable-next-line
     for (let i = 0; i < rename.length; i++) {
         const [container, oldKey, newKey] = rename[i];
 
