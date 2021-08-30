@@ -13,7 +13,7 @@ const KEY_REMAPS: Record<string, string> = {
     word_grade: 'vocabularyGrade',
     trans_lang: 'language',
     trans_word: 'word',
-    trans_dfn: 'definition'
+    trans_dfn: 'definition',
 };
 
 function setKey(key: string) {
@@ -128,7 +128,6 @@ function getCleanJsonData(json: any): object {
             elem = elem[key];
         }
 
-
         // push nested elements to the stack
         if (Array.isArray(elem)) {
             for (const index of elem) {
@@ -140,7 +139,7 @@ function getCleanJsonData(json: any): object {
                     continue;
                 }
 
-                stack.push([elem, elementKey])
+                stack.push([elem, elementKey]);
             }
         }
     }
