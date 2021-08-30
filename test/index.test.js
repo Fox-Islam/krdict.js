@@ -61,12 +61,6 @@ describe('When searching via the krdict API using the "searchDictionary" functio
         expect(getNthItem(responseData, 1).word).to.eql(['나무라다']);
         expect(getNthItem(responseData, 2).word).to.eql(['나무하다']);
         expect(getNthItem(responseData, 3).word).to.eql(['나무아미타불']);
-        expect(getNthItem(responseData, 4).word).to.eql(['나무꾼']);
-        expect(getNthItem(responseData, 5).word).to.eql(['나무아미타불']);
-        expect(getNthItem(responseData, 6).word).to.eql(['나무람']);
-        expect(getNthItem(responseData, 7).word).to.eql(['나무토막']);
-        expect(getNthItem(responseData, 8).word).to.eql(['나무젓가락']);
-        expect(getNthItem(responseData, 9).word).to.eql(['나무숲']);
     });
 
     it('Should return correct number of results when passing in "numberOfResults" parameter', async function () {
@@ -104,17 +98,3 @@ describe('When searching via the krdict API using the "searchDictionary" functio
         expect(getNthItem(responseData, 0).meaning[2].definition).to.eql(['불을 때기 위해 베어 놓은 나무의 줄기나 가지.']);
     });
 });
-
-// Remaining parameters to add:
-// searchTargetType: Where to search in (SearchTargetType, default 'vocabulary')
-// targetLanguage: If the search target type is 'original language', use this language to search by (TargetLanguage, default 'all')
-// searchMethod: Method to search with (SearchMethod, default 'exact')
-// firstCategory: Category to search by (FirstCategory[], default 'all')
-// secondCategory: Category to search by (SecondCategory[], default 'all')
-// vocabularyGrade: The level of the vocabulary (VocabularyGrade[], default 'all')
-// partOfSpeech: The part of speech the term belongs to (PartOfSpeech[], default 'all')
-// multimediaInformation: Multimedia information to return (MultimediaInformation[], default 'all')
-// minNumberOfSyllables: Minimum number of syllables in result word (number, default 1)
-// maxNumberOfSyllables: Maximum number of syllables in result word (number, default 0)
-// meaningCategory: The category of the meaning (MeaningCategory[], default 'all')
-// subjectCategory: The category of the subject or situation (SubjectCategory[], default 'all')
