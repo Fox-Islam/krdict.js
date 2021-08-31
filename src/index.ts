@@ -1,9 +1,10 @@
 import axios from 'axios';
 import * as xmlParser from 'xml2js';
 
-import { parameterMapper, Parameters, ParametersValues } from './parameters';
+import { parameterMapper, Parameters, ParametersValues, ViewParameters } from './parameters';
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
+const VIEW_URL = 'https://krdict.korean.go.kr/api/view';
 let API_KEY: string | null = null;
 const KEY_REMAPS: Record<string, string> = {
     sup_no: 'homomorphicNumber',
@@ -22,6 +23,10 @@ function setKey(key: string) {
 
 function dictionarySearch(parameters: Parameters) {
     return sendRequest(createKrdictApiParameters(parameters));
+}
+
+function dictionaryView(parameters: ViewParameters) {
+    return sendRequest(createKrdictApiParameters(transformViewParameters(parameters)), VIEW_URL);
 }
 
 function createKrdictApiParameters(parameters: Parameters) {
@@ -45,6 +50,23 @@ function createKrdictApiParameters(parameters: Parameters) {
     return krdictParameters;
 }
 
+function transformViewParameters(parameters: ViewParameters): Parameters {
+    if (!parameters.hasOwnProperty('viewMethod')) {
+        return parameters as Parameters;
+    }
+
+    if (parameters.viewMethod === 'word_info') {
+        if (parameters.hasOwnProperty('query')) {
+            const homomorphNum = parameters.homomorphicNumber !== undefined ? parameters.homomorphicNumber : 0;
+            parameters.query += homomorphNum;
+        }
+    } else if (parameters.hasOwnProperty('targetCode')) {
+        parameters.query = parameters.targetCode.toString()
+    }
+
+    return parameters as Parameters;
+}
+
 function getMappedParameterValue(sensiblePropertyName: string, parameterValue: ParametersValues) {
     const mapperFunction = parameterMapper[sensiblePropertyName].mapperFunction;
     if (mapperFunction !== undefined && parameterValue !== undefined) {
@@ -53,8 +75,8 @@ function getMappedParameterValue(sensiblePropertyName: string, parameterValue: P
     return parameterValue;
 }
 
-function sendRequest(parameters: any) {
-    return axios(API_URL, {
+function sendRequest(parameters: any, apiUrl: string = API_URL) {
+    return axios(apiUrl, {
         params: parameters,
     })
         .then((response) => {
@@ -96,6 +118,10 @@ function handleRemaps(container: any, key: string, rename: any[][]) {
 }
 
 function handleSnakeCase(container: any, key: string, rename: any[][]) {
+    if (KEY_REMAPS[key] !== undefined) {
+        return;
+    }
+
     let i = key.indexOf('_');
     if (i === -1) {
         return;
@@ -130,8 +156,8 @@ function getCleanJsonData(json: any): object {
 
         // push nested elements to the stack
         if (Array.isArray(elem)) {
-            for (const index of elem) {
-                stack.push([elem[index], null]);
+            for (const value of elem) {
+                stack.push([value, null]);
             }
         } else if (typeof elem === 'object') {
             for (const elementKey in elem) {
@@ -155,4 +181,4 @@ function getCleanJsonData(json: any): object {
     return json;
 }
 
-export { dictionarySearch, setKey };
+export { dictionarySearch, dictionaryView, setKey };

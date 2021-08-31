@@ -10,6 +10,7 @@ import { SearchTargetType, mapSearchTargetType } from './value_types/search_targ
 import { SecondCategory } from './value_types/second_category';
 import { SubjectCategory, mapSubjectCategory } from './value_types/subject_category';
 import { TranslationLanguage, mapTranslationLanguage } from './value_types/translation_language';
+import { ViewMethod } from './value_types/view_method';
 import { VocabularyGrade, mapVocabularyGrade } from './value_types/vocabulary_grade';
 
 type ParametersValues = string | number | boolean | number[] | string[] | undefined;
@@ -41,6 +42,25 @@ interface Parameters extends ParametersProperties {
     meaningCategory?: MeaningCategory[];
     subjectCategory?: SubjectCategory[];
 }
+
+interface BaseViewParameters extends ParametersProperties {
+    key?: string;
+    viewMethod: ViewMethod;
+    shouldTranslate?: boolean;
+    translationLanguage?: TranslationLanguage | TranslationLanguage[];
+}
+
+interface WordInfoViewParameters extends BaseViewParameters {
+    query: string;
+    viewMethod: 'word_info';
+    homomorphicNumber?: number;
+}
+interface TargetCodeViewParameters extends BaseViewParameters {
+    targetCode: number;
+    viewMethod: 'target_code';
+}
+
+type ViewParameters = WordInfoViewParameters | TargetCodeViewParameters;
 
 interface ParameterMapperProperties {
     [property: string]: {
@@ -122,10 +142,13 @@ const parameterMapper: ParameterMapperProperties = {
         name: 'subject_cat',
         mapperFunction: mapSubjectCategory,
     },
+    viewMethod: {
+        name: 'method'
+    }
 };
 
 function booleanMapper(booleanValue: boolean) {
     return booleanValue ? 'y' : 'n';
 }
 
-export { Parameters, ParametersValues, parameterMapper };
+export { Parameters, ParametersValues, ViewParameters, parameterMapper };
