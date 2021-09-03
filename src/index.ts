@@ -7,9 +7,15 @@ const API_URL = 'https://krdict.korean.go.kr/api/search';
 const VIEW_URL = 'https://krdict.korean.go.kr/api/view';
 let API_KEY: string | null = null;
 const KEY_REMAPS: Record<string, string> = {
+    conju_info: 'conjugations',
+    der_info: 'derivativeInfo',
+    ref_info: 'referenceInfo',
+    rel_info: 'relatedInfo',
     sup_no: 'homomorphicNumber',
     sense: 'meaning',
+    sense_info: 'meaningInfo',
     sense_order: 'meaningOrder',
+    subsense_info: 'submeaningInfo',
     pos: 'partOfSpeech',
     word_grade: 'vocabularyGrade',
     trans_lang: 'language',
@@ -170,9 +176,8 @@ function getCleanJsonData(json: any): object {
         }
     }
 
-    // tslint:disable-next-line
-    for (let i = 0; i < rename.length; i++) {
-        const [container, oldKey, newKey] = rename[i];
+    for (const renamed of rename) {
+        const [container, oldKey, newKey] = renamed;
 
         container[newKey] = container[oldKey];
         delete container[oldKey];
