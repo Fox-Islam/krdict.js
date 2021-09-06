@@ -67,7 +67,7 @@ function transformViewParameters(parameters: ViewParameters): Parameters {
             parameters.query += homomorphNum;
         }
     } else if (parameters.hasOwnProperty('targetCode')) {
-        parameters.query = parameters.targetCode.toString()
+        parameters.query = parameters.targetCode.toString();
     }
 
     return parameters as Parameters;

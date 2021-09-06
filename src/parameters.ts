@@ -143,8 +143,8 @@ const parameterMapper: ParameterMapperProperties = {
         mapperFunction: mapSubjectCategory,
     },
     viewMethod: {
-        name: 'method'
-    }
+        name: 'method',
+    },
 };
 
 function booleanMapper(booleanValue: boolean) {

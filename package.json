@@ -1,6 +1,6 @@
 {
   "name": "krdict.js",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A node.js module to interact with krdict, the Korean Learners' Dictionary",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
