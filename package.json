@@ -16,7 +16,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "test": "mocha 'test' --require ts-node/register --recursive --exit"
+    "test": "mocha 'test' --require ts-node/register --recursive --exit --timeout 20000"
   },
   "author": "Fox Islam",
   "license": "ISC",
