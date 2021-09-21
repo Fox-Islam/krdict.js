@@ -49,7 +49,7 @@ const KEY_REMAPS: Record<string, string> = {
     trans_word: 'word',
     trans_dfn: 'definition',
 };
-const XML_PARSER = new Parser({explicitArray: false});
+const XML_PARSER = new Parser({explicitArray: false, trim: true});
 
 function setKey(key: string) {
     API_KEY = key;
@@ -132,17 +132,6 @@ function sendRequest(parameters: any, apiUrl: string = API_URL) {
         });
 }
 
-function handleTabAndNewline(container: any, key: string) {
-    const elem = container[key];
-
-    if (Array.isArray(elem) && elem.length === 1 && typeof elem[0] === 'string') {
-        // this branch can be removed when explicitArray option is used
-        elem[0] = elem[0].trim();
-    } else if (typeof elem === 'string') {
-        container[key] = elem.trim();
-    }
-}
-
 function handleRemaps(container: any, key: string, rename: any[][]) {
     if (KEY_REMAPS[key] === undefined) {
         return;
@@ -189,7 +178,6 @@ function getCleanJsonData(json: any): object {
         let [elem, key] = stack.pop()!;
 
         if (key !== null) {
-            handleTabAndNewline(elem, key);
             handleRemaps(elem, key, rename);
             handleSnakeCase(elem, key, rename);
             handleTypeConversion(elem, key);
