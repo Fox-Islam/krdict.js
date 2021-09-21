@@ -1,11 +1,38 @@
 import axios from 'axios';
-import * as xmlParser from 'xml2js';
+import { Parser } from 'xml2js';
 
 import { parameterMapper, Parameters, ParametersValues, ViewParameters } from './parameters';
+import { arrayConverter, numberConverter, stringConverter } from './converters'
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
 const VIEW_URL = 'https://krdict.korean.go.kr/api/view';
 let API_KEY: string | null = null;
+const CONVERTERS: Record<string, Function> = {
+    category_info: arrayConverter,
+    conju_info: arrayConverter,
+    der_info: arrayConverter,
+    error_code: numberConverter,
+    example_info: arrayConverter,
+    item: arrayConverter,
+    multimedia_info: arrayConverter,
+    num: numberConverter,
+    original_language_info: arrayConverter,
+    pattern_info: arrayConverter,
+    pronunciation_info: arrayConverter,
+    pos: stringConverter,
+    ref_info: arrayConverter,
+    rel_info: arrayConverter,
+    sense: arrayConverter,
+    sense_info: arrayConverter,
+    sense_order: numberConverter,
+    start: numberConverter,
+    subword_info: arrayConverter,
+    subsense_info: arrayConverter,
+    sup_no: numberConverter,
+    target_code: numberConverter,
+    translation: arrayConverter,
+    total: numberConverter,
+};
 const KEY_REMAPS: Record<string, string> = {
     conju_info: 'conjugations',
     der_info: 'derivativeInfo',
@@ -22,6 +49,7 @@ const KEY_REMAPS: Record<string, string> = {
     trans_word: 'word',
     trans_dfn: 'definition',
 };
+const XML_PARSER = new Parser({explicitArray: false});
 
 function setKey(key: string) {
     API_KEY = key;
@@ -88,7 +116,7 @@ function sendRequest(parameters: any, apiUrl: string = API_URL) {
         .then((response) => {
             const data = response.data.trim();
             let jsonFromXml = {};
-            xmlParser.parseString(data, (xmlParseError, parsedData) => {
+            XML_PARSER.parseString(data, (xmlParseError: Error, parsedData: any) => {
                 if (xmlParseError) {
                     throw xmlParseError.message;
                 }
@@ -144,6 +172,14 @@ function handleSnakeCase(container: any, key: string, rename: any[][]) {
     rename.push([container, oldKey, key]);
 }
 
+function handleTypeConversion(container: any, key: string) {
+    if (CONVERTERS[key] === undefined) {
+        return;
+    }
+
+    CONVERTERS[key](container, key);
+}
+
 function getCleanJsonData(json: any): object {
     const stack = [[json, null]];
     const rename: any[][] = [];
@@ -156,6 +192,7 @@ function getCleanJsonData(json: any): object {
             handleTabAndNewline(elem, key);
             handleRemaps(elem, key, rename);
             handleSnakeCase(elem, key, rename);
+            handleTypeConversion(elem, key);
 
             elem = elem[key];
         }
