@@ -39,7 +39,7 @@ const KEY_REMAPS: Record<string, string> = {
     der_info: 'derivativeInfo',
     ref_info: 'referenceInfo',
     rel_info: 'relatedInfo',
-    sup_no: 'homomorphicNumber',
+    sup_no: 'homographNumber',
     sense: 'meaning',
     sense_info: 'meaningInfo',
     sense_order: 'meaningOrder',
@@ -92,8 +92,7 @@ function transformViewParameters(parameters: ViewParameters): Parameters {
 
     if (parameters.viewMethod === 'word_info') {
         if (parameters.hasOwnProperty('query')) {
-            const homomorphNum = parameters.homomorphicNumber !== undefined ? parameters.homomorphicNumber : 0;
-            parameters.query += homomorphNum;
+            parameters.query += parameters.homographNumber ?? 0;
         }
     } else if (parameters.hasOwnProperty('targetCode')) {
         parameters.query = parameters.targetCode.toString();

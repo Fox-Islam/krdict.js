@@ -53,7 +53,7 @@ interface BaseViewParameters extends ParametersProperties {
 interface WordInfoViewParameters extends BaseViewParameters {
     query: string;
     viewMethod: 'word_info';
-    homomorphicNumber?: number;
+    homographNumber?: number;
 }
 interface TargetCodeViewParameters extends BaseViewParameters {
     targetCode: number;
