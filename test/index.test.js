@@ -89,3 +89,31 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
         expect(getNthItem(responseData, 0).meaning[2].definition).to.eql('불을 때기 위해 베어 놓은 나무의 줄기나 가지.');
     });
 });
+
+describe('When retrieving data via the krdict API using the "dictionaryView" function', function () {
+    it('Should return results when searching with word_info view method', async function() {
+        const response = await krdict.dictionaryView({
+            query: '나무',
+            viewMethod: 'word_info'
+        });
+        const responseData = response.data;
+        expect(responseData.channel).to.not.be.null;
+        const item = getNthItem(responseData, 0);
+        expect(item.targetCode).to.eql(32750);
+        expect(item.wordInfo.word).to.eql('나무');
+        expect(responseData.channel.total).to.eql(1);
+    });
+
+    it('Should return results when searching with target_code view method', async function () {
+        const response = await krdict.dictionaryView({
+            targetCode: 32750,
+            viewMethod: 'target_code'
+        });
+        const responseData = response.data;
+        expect(responseData.channel).to.not.be.null;
+        const item = getNthItem(responseData, 0);
+        expect(item.targetCode).to.eql(32750);
+        expect(item.wordInfo.word).to.eql('나무');
+        expect(responseData.channel.total).to.eql(1);
+    });
+});
