@@ -34,6 +34,7 @@ const CONVERTERS: Record<string, Function> = {
     total: numberConverter,
 };
 const KEY_REMAPS: Record<string, string> = {
+    channel: 'data',
     conju_info: 'conjugations',
     der_info: 'derivativeInfo',
     ref_info: 'referenceInfo',
@@ -122,10 +123,10 @@ function sendRequest(parameters: any, apiUrl: string = API_URL) {
                 }
                 jsonFromXml = parsedData;
             });
-            return {
-                requestParameters: parameters,
-                data: getCleanJsonData(jsonFromXml),
-            };
+
+            const result = getCleanJsonData(jsonFromXml);
+            result.requestParameters = parameters;
+            return result;
         })
         .catch((error) => {
             throw error;
@@ -169,7 +170,7 @@ function handleTypeConversion(container: any, key: string) {
     CONVERTERS[key](container, key);
 }
 
-function getCleanJsonData(json: any): object {
+function getCleanJsonData(json: any): any {
     const stack = [[json, null]];
     const rename: any[][] = [];
 
