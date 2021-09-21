@@ -311,10 +311,13 @@ type MeaningCategory =
     | 'concept> person'
     | 'area';
 
-function mapMeaningCategory(input: MeaningCategory[]): number[] {
+function mapMeaningCategory(input: MeaningCategory[]): number | string {
+    if (typeof input === 'string') {
+        return mapKey[input];
+    }
     return input.map((transLang) => {
         return mapKey[transLang];
-    });
+    }).join(',');
 }
 
 export { MeaningCategory, mapMeaningCategory };

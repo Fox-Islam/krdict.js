@@ -217,9 +217,12 @@ type SubjectCategory =
     | 'religion'
     | 'philosophy and ethics';
 
-function mapSubjectCategory(input: SubjectCategory[]): number[] {
+function mapSubjectCategory(input: SubjectCategory[]): number | string {
+    if (typeof input === 'string') {
+        return mapKey[input];
+    }
     return input.map((transLang) => {
         return mapKey[transLang];
-    });
+    }).join(',');
 }
 export { SubjectCategory, mapSubjectCategory };

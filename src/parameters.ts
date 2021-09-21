@@ -1,4 +1,4 @@
-import { FirstCategory } from './value_types/first_category';
+import { FirstCategory, mapFirstCategory } from './value_types/first_category';
 import { mapSearchTarget, SearchTarget } from './value_types/search_target';
 import { mapSortMethod, SortMethod } from './value_types/sort_method';
 import { MeaningCategory, mapMeaningCategory } from './value_types/meaning_category';
@@ -7,7 +7,7 @@ import { PartOfSpeech, mapPartOfSpeech } from './value_types/part_of_speech';
 import { TargetLanguage, mapTargetLanguage } from './value_types/target_language';
 import { SearchMethod } from './value_types/search_method';
 import { SearchTargetType, mapSearchTargetType } from './value_types/search_target_type';
-import { SecondCategory } from './value_types/second_category';
+import { mapSecondCategory, SecondCategory } from './value_types/second_category';
 import { SubjectCategory, mapSubjectCategory } from './value_types/subject_category';
 import { TranslationLanguage, mapTranslationLanguage } from './value_types/translation_language';
 import { ViewMethod } from './value_types/view_method';
@@ -32,15 +32,15 @@ interface Parameters extends ParametersProperties {
     searchTargetType?: SearchTargetType;
     targetLanguage?: TargetLanguage;
     searchMethod?: SearchMethod;
-    firstCategory?: FirstCategory[];
-    secondCategory?: SecondCategory[];
-    vocabularyGrade?: VocabularyGrade[];
-    partOfSpeech?: PartOfSpeech[];
-    multimediaInformation?: MultimediaInformation[];
+    firstCategory?: FirstCategory | FirstCategory[];
+    secondCategory?: SecondCategory | SecondCategory[];
+    vocabularyGrade?: VocabularyGrade | VocabularyGrade[];
+    partOfSpeech?: PartOfSpeech | PartOfSpeech[];
+    multimediaInformation?: MultimediaInformation | MultimediaInformation[];
     minNumberOfSyllables?: number;
     maxNumberOfSyllables?: number;
-    meaningCategory?: MeaningCategory[];
-    subjectCategory?: SubjectCategory[];
+    meaningCategory?: MeaningCategory | MeaningCategory[];
+    subjectCategory?: SubjectCategory | SubjectCategory[];
 }
 
 interface BaseViewParameters extends ParametersProperties {
@@ -112,9 +112,11 @@ const parameterMapper: ParameterMapperProperties = {
     },
     firstCategory: {
         name: 'type1',
+        mapperFunction: mapFirstCategory,
     },
     secondCategory: {
         name: 'type2',
+        mapperFunction: mapSecondCategory,
     },
     vocabularyGrade: {
         name: 'level',
