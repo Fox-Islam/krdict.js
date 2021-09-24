@@ -39,7 +39,7 @@ interface Parameters extends ParametersProperties {
     multimediaInformation?: MultimediaInformation | MultimediaInformation[];
     minNumberOfSyllables?: number;
     maxNumberOfSyllables?: number;
-    meaningCategory?: MeaningCategory | MeaningCategory[];
+    meaningCategory?: MeaningCategory;
     subjectCategory?: SubjectCategory | SubjectCategory[];
 }
 
