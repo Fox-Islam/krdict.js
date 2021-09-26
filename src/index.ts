@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Parser } from 'xml2js';
 
 import { parameterMapper, Parameters, ParametersValues, ViewParameters } from './parameters';
-import { arrayConverter, numberConverter, stringConverter } from './converters'
+import { arrayConverter, numberConverter, stringConverter } from './converters';
 
 const API_URL = 'https://krdict.korean.go.kr/api/search';
 const VIEW_URL = 'https://krdict.korean.go.kr/api/view';
@@ -14,6 +14,7 @@ const CONVERTERS: Record<string, Function> = {
     error_code: numberConverter,
     example_info: arrayConverter,
     item: arrayConverter,
+    link_target_code: numberConverter,
     multimedia_info: arrayConverter,
     num: numberConverter,
     original_language_info: arrayConverter,
