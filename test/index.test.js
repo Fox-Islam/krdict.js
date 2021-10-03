@@ -6,7 +6,7 @@ const krdict = require('./../src/index');
 krdict.setKey(process.env.KRDICT_KEY);
 
 function getNthItem(responseData, n) {
-    return responseData.channel.item[n];
+    return responseData.item[n];
 }
 
 describe('When searching via the krdict API using the "dictionarySearch" function', function () {
@@ -15,7 +15,7 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
             query: '나무'
         });
         const responseData = response.data;
-        expect(responseData.channel).to.not.be.null;
+        expect(responseData).to.not.be.null;
         expect(getNthItem(responseData, 0).word).to.eql('나무');
         expect(getNthItem(responseData, 1).word).to.eql('나무라다');
         expect(getNthItem(responseData, 2).word).to.eql('나무꾼');
@@ -26,9 +26,9 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
         expect(getNthItem(responseData, 7).word).to.eql('나무아미타불');
         expect(getNthItem(responseData, 8).word).to.eql('나무아미타불');
         expect(getNthItem(responseData, 9).word).to.eql('나무저');
-        expect(responseData.channel.num).to.eql(10);
-        expect(responseData.channel.start).to.eql(1);
-        expect(responseData.channel.total).to.eql(53);
+        expect(responseData.num).to.eql(10);
+        expect(responseData.start).to.eql(1);
+        expect(responseData.total).to.eql(53);
     });
 
     it('Should start at correct index when passing in "searchStartIndex" parameter', async function () {
@@ -37,8 +37,8 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
             searchStartIndex: 5
         });
         const responseData = response.data;
-        expect(responseData.channel).to.not.be.null;
-        expect(responseData.channel.start).to.eql(5);
+        expect(responseData).to.not.be.null;
+        expect(responseData.start).to.eql(5);
     });
 
     it('Should return correct number of results when passing in "numberOfResults" parameter', async function () {
@@ -47,8 +47,8 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
             numberOfResults: 15
         });
         const responseData = response.data;
-        expect(responseData.channel.item).to.be.an('array').of.length(15);
-        expect(responseData.channel.num).to.eql(15);
+        expect(responseData.item).to.be.an('array').of.length(15);
+        expect(responseData.num).to.eql(15);
     });
 
     it('Should return correctly sorted data when passing in "sortMethod" parameter', async function () {
@@ -69,7 +69,7 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
             searchTarget: 'example'
         });
         const responseData = response.data;
-        responseData.channel.item.forEach((item) => {
+        responseData.item.forEach((item) => {
             expect(item.example).to.be.a('string');
             expect(item.example).to.contain('나무');
         });
@@ -82,7 +82,7 @@ describe('When searching via the krdict API using the "dictionarySearch" functio
             detailedSearch: true,
         });
         const responseData = response.data;
-        expect(responseData.channel.item).to.be.an('array').of.length(1);
+        expect(responseData.item).to.be.an('array').of.length(1);
         expect(getNthItem(responseData, 0).meaning).to.be.an('array').of.length(3);
         expect(getNthItem(responseData, 0).meaning[0].definition).to.eql('단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물.');
         expect(getNthItem(responseData, 0).meaning[1].definition).to.eql('집이나 가구 등을 만드는 데 사용하는 재목.');
@@ -97,11 +97,11 @@ describe('When retrieving data via the krdict API using the "dictionaryView" fun
             viewMethod: 'word_info'
         });
         const responseData = response.data;
-        expect(responseData.channel).to.not.be.null;
+        expect(responseData).to.not.be.null;
         const item = getNthItem(responseData, 0);
         expect(item.targetCode).to.eql(32750);
         expect(item.wordInfo.word).to.eql('나무');
-        expect(responseData.channel.total).to.eql(1);
+        expect(responseData.total).to.eql(1);
     });
 
     it('Should return results when searching with target_code view method', async function () {
@@ -110,10 +110,10 @@ describe('When retrieving data via the krdict API using the "dictionaryView" fun
             viewMethod: 'target_code'
         });
         const responseData = response.data;
-        expect(responseData.channel).to.not.be.null;
+        expect(responseData).to.not.be.null;
         const item = getNthItem(responseData, 0);
         expect(item.targetCode).to.eql(32750);
         expect(item.wordInfo.word).to.eql('나무');
-        expect(responseData.channel.total).to.eql(1);
+        expect(responseData.total).to.eql(1);
     });
 });
