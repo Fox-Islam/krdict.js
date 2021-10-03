@@ -22,25 +22,23 @@ krdict.dictionarySearch({
 Which would ouput something like this:
 ```json
 {
-  "channel": {
-    ...
-    "item": [
-      {
-        "word": [ "나무" ],
-        "vocabularyGrade": [ "초급" ],
-        "partOfSpeech": [ "명사" ],
-        ...
-        "meaning": [
-          {
-            "meaningOrder": [ "1" ],
-            "definition": [ "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물." ]
-          },
-          ...
-        ]
-      },
+  ...
+  "item": [
+    {
+      "word": "나무",
+      "vocabularyGrade": "초급",
+      "partOfSpeech": "명사",
       ...
-    ]
-  }
+      "meaning": [
+        {
+          "meaningOrder": 1,
+          "definition": "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물."
+        },
+        ...
+      ]
+    },
+    ...
+  ]
 }
 ```
 
@@ -72,30 +70,28 @@ which are mapped to the parameter names and values expected by the krdict API:
 ```
 ```json
 {
-  "channel": {
-    ...
-    "item": [
-        {
-            "word": [ "나무" ],
-            "vocabularyGrade": [ "초급" ],
-            "partOfSpeech": [ "명사" ],
-            ...
-            "meaning": [
-                {
-                    "meaningOrder": [ "1" ],
-                    "definition": [ "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물." ],
-                    "translation": [{
-                        "language": [ "영어" ],
-                        "word": [ "tree" ],
-                        "definition": [ "A plant with a hard stem, branches and leaves." ]
-                    }]
-                },
-                ...
-            ]
-        },
-        ...
-    ]
-  }
+  ...
+  "item": [
+      {
+          "word": "나무",
+          "vocabularyGrade": "초급",
+          "partOfSpeech": "명사",
+          ...
+          "meaning": [
+              {
+                  "meaningOrder": 1,
+                  "definition": "단단한 줄기에 가지와 잎이 달린, 여러 해 동안 자라는 식물.",
+                  "translation": [{
+                      "language": "영어",
+                      "word": "tree",
+                      "definition": "A plant with a hard stem, branches and leaves."
+                  }]
+              },
+              ...
+          ]
+      },
+      ...
+  ]
 }
 ```
 You can view a complete list of accepted parameters and their values on [the wiki page](https://github.com/Fox-Islam/krdict.js/wiki/Complete-list-of-parameters)

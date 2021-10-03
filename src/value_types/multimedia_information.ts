@@ -10,10 +10,13 @@ const mapKey = {
 
 type MultimediaInformation = 'all' | 'photo' | 'illustration' | 'video' | 'animation' | 'sound' | 'none';
 
-function mapMultimediaInformation(input: MultimediaInformation[]): number[] {
+function mapMultimediaInformation(input: MultimediaInformation | MultimediaInformation[]): number | string {
+    if (typeof input === 'string') {
+        return mapKey[input];
+    }
     return input.map((transLang) => {
         return mapKey[transLang];
-    });
+    }).join(',');
 }
 
 export { MultimediaInformation, mapMultimediaInformation };

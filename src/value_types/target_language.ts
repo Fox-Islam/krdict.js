@@ -1,9 +1,8 @@
 const mapKey = {
     all: 0,
-    'native language': 1,
-    chinese: 2,
-    'chinese (simplified)': 2,
-    unclear: 3,
+    'native word': 1,
+    'sino-korean': 2,
+    unknown: 3,
     english: 4,
     greek: 5,
     dutch: 6,
@@ -20,8 +19,7 @@ const mapKey = {
     vietnamese: 17,
     bulgarian: 18,
     sanskrit: 19,
-    servo: 20,
-    croat: 20,
+    'serbo-croatian': 20,
     swahili: 21,
     swedish: 22,
     arabic: 23,
@@ -32,7 +30,7 @@ const mapKey = {
     italian: 28,
     indonesian: 29,
     japanese: 30,
-    'chinese (traditional)': 31,
+    chinese: 31,
     czech: 32,
     cambodian: 33,
     quechua: 34,
@@ -55,10 +53,9 @@ const mapKey = {
 
 type TargetLanguage =
     | 'all'
-    | 'native language'
-    | 'chinese'
-    | 'chinese (simplified)'
-    | 'unclear'
+    | 'native word'
+    | 'sino-korean'
+    | 'unknown'
     | 'english'
     | 'greek'
     | 'dutch'
@@ -75,8 +72,7 @@ type TargetLanguage =
     | 'vietnamese'
     | 'bulgarian'
     | 'sanskrit'
-    | 'servo'
-    | 'croat'
+    | 'serbo-croatian'
     | 'swahili'
     | 'swedish'
     | 'arabic'
@@ -87,7 +83,7 @@ type TargetLanguage =
     | 'italian'
     | 'indonesian'
     | 'japanese'
-    | 'chinese (traditional)'
+    | 'chinese'
     | 'czech'
     | 'cambodian'
     | 'quechua'

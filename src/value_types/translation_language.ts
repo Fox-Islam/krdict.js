@@ -25,13 +25,13 @@ type TranslationLanguage =
     | 'indonesian'
     | 'russian';
 
-function mapTranslationLanguage(input: TranslationLanguage | TranslationLanguage[]): number | number[] {
+function mapTranslationLanguage(input: TranslationLanguage | TranslationLanguage[]): number | string {
     if (typeof input === 'string') {
         return mapKey[input];
     }
     return input.map((transLang) => {
         return mapKey[transLang];
-    });
+    }).join(',');
 }
 
 export { TranslationLanguage, mapTranslationLanguage };
